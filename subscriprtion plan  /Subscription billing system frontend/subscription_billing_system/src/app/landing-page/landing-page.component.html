@@ -1,0 +1,139 @@
+<div class="landing-container">
+  <!-- Removed the header since we now have a global navbar -->
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>SUBSCRIPTION BILLING SYSTEM</h1>
+      <p class="subtitle">Simple. Flexible. Powerful.</p>
+      <div class="cta-buttons">
+        <a routerLink="/register" class="btn-primary" *ngIf="!isLoggedIn">Get Started</a>
+        <a routerLink="/dashboard" class="btn-primary" *ngIf="isLoggedIn">Go to Dashboard</a>
+        <a routerLink="/plans" class="btn-secondary">View Plans</a>
+        <a href="#learn-more" class="btn-tertiary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add the discount banner section -->
+  <section class="discount-banner" *ngIf="availableDiscounts && availableDiscounts.length > 0">
+    <h2>SPECIAL OFFERS</h2>
+    <div class="discount-cards">
+      <div class="discount-card" *ngFor="let discount of availableDiscounts">
+        <div class="discount-code">{{ discount.code }}</div>
+        <div class="discount-value">{{ formatDiscountValue(discount) }} OFF</div>
+        <div class="discount-description">{{ discount.description }}</div>
+        <a routerLink="/plans" class="btn-apply-discount">Apply to Subscription</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="learn-more" class="features">
+    <h2>WHY CHOOSE OUR SUBSCRIPTION BILLING SYSTEM?</h2>
+    <div class="feature-cards">
+      <div class="feature-card">
+        <h3>EASY TO USE</h3>
+        <p>Simple dashboard for managing all your subscription needs</p>
+      </div>
+      <div class="feature-card">
+        <h3>FLEXIBLE BILLING</h3>
+        <p>Multiple payment options and billing cycles</p>
+      </div>
+      <div class="feature-card">
+        <h3>FULL ANALYTICS</h3>
+        <p>Comprehensive reporting and usage tracking</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="plans" class="plans">
+    <h2>CHOOSE YOUR PERFECT PLAN</h2>
+    <p class="section-subtitle">Find a subscription that fits your needs</p>
+    
+    <!-- Discount callout in the plans section -->
+    <div class="discount-callout" *ngIf="availableDiscounts && availableDiscounts.length > 0">
+      <div class="discount-icon">🏷️</div>
+      <div class="discount-text">
+        <p>
+          <strong>Save up to {{ getMaxDiscount() }}</strong> with our current promotions! 
+          <a routerLink="/plans">See details</a>
+        </p>
+      </div>
+    </div>
+    
+    <!-- Show loading state -->
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading subscription plans...</p>
+    </div>
+    
+    <!-- Show error state -->
+    <div *ngIf="error && !loading" class="error-container">
+      <p>Unable to load subscription plans. Please try again later.</p>
+      <button class="btn-retry" (click)="refreshPlans()">Try Again</button>
+    </div>
+    
+    <!-- Show plans when available -->
+    <div class="plan-cards" *ngIf="!loading && !error && plans.length > 0">
+      <div class="plan-card" *ngFor="let plan of plans" [class.featured]="plan.recommended">
+        <div class="ribbon" *ngIf="plan.recommended">POPULAR</div>
+        <div class="plan-header">
+          <h3>{{ plan.name }}</h3>
+          <div class="price-container">
+            <span class="currency">₹</span>
+            <span class="price">{{ plan.price.toFixed(2) }}</span>
+            <span class="period">/{{ plan.billingCycle }}</span>
+          </div>
+          <p class="plan-description">{{ plan.description }}</p>
+        </div>
+        <div class="plan-features">
+          <ul>
+            <li *ngFor="let feature of plan.features">{{ feature }}</li>
+            <li *ngIf="plan.userLimit">{{ plan.userLimit }}</li>
+            <li *ngIf="plan.storageLimit">{{ plan.storageLimit }} Storage</li>
+            <li *ngIf="plan.apiAccess">API Access Included</li>
+            <li *ngIf="plan.supportLevel">{{ plan.supportLevel }} Support</li>
+          </ul>
+        </div>
+        <div class="plan-footer">
+          <a [routerLink]="'/plans'" class="btn-plan">
+            View Details
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="view-all-plans">
+      <a routerLink="/plans" class="btn-view-all">View All Plans</a>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2>TESTIMONIALS</h2>
+    <div class="testimonial-cards">
+      <div class="testimonial-card">
+        <p class="quote">"This billing system revolutionized how we manage subscriptions. Highly recommended!"</p>
+        <p class="author">- John Smith, CEO of TechCorp</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="quote">"Increased our revenue by 30% with flexible billing options and better subscription management."</p>
+        <p class="author">- Sarah Johnson, CFO of DataFlow Inc.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="get-started">
+    <h2>GET STARTED TODAY</h2>
+    <div class="get-started-card">
+      <p>Ready to streamline your subscription billing?</p>
+      <div class="get-started-buttons">
+        <a routerLink="/register" class="btn-primary" *ngIf="!isLoggedIn">Sign Up for Free Trial</a>
+        <a routerLink="/plans" class="btn-primary" *ngIf="isLoggedIn">Browse Plans</a>
+        <a routerLink="/contact" class="btn-outline">Contact Sales</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 Subscription Billing System | Privacy Policy | Terms</p>
+  </footer>
+</div> 

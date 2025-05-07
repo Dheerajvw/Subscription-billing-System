@@ -1,0 +1,138 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div class="logo">
+      <h1>Subscription Dashboard</h1>
+    </div>
+    <div class="user-profile">
+    </div>
+  </div>
+  
+  <!-- Display errors if any -->
+  <div class="alert-error" *ngIf="error">
+    {{ error }}
+  </div>
+  
+  <!-- Loading state for entire dashboard -->
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div>
+    <span>Loading your dashboard...</span>
+  </div>
+
+  <div class="dashboard-content" *ngIf="!loading">
+    <!-- User Information Panel -->
+    <div class="panel user-details">
+      <h2>User Information</h2>
+      <div class="details-row">
+        <div class="label">Name:</div>
+        <div class="value">{{ currentUser?.name || currentUser?.username || 'N/A' }}</div>
+      </div>
+      <div class="details-row">
+        <div class="label">Email:</div>
+        <div class="value">{{ currentUser?.email || 'N/A' }}</div>
+      </div>
+      <div class="details-row" *ngIf="!isUserActivated">
+        <div class="label">Status:</div>
+        <div class="value highlight-warning">Not Activated</div>
+      </div>
+      <div class="details-row" *ngIf="isUserActivated">
+        <div class="label">Status:</div>
+        <div class="value highlight">Activated</div>
+      </div>
+      <div class="details-row" *ngIf="isUserActivated">
+        <div class="label">Plan Status:</div>
+        <div class="value" [ngClass]="{'highlight': hasActiveSubscription, 'highlight-warning': !hasActiveSubscription}">
+          {{ hasActiveSubscription ? 'Active Subscription' : 'No Active Plan' }}
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel activation-message" *ngIf="!isUserActivated">
+      <h2>Account Activation Required</h2>
+      <div class="activation-info">
+        <p>Your account hasn't been activated yet. Please activate your account to access subscription plans.</p>
+        <p class="sub-message">Contact support if you're having trouble activating your account.</p>
+      </div>
+    </div>
+    
+    <div class="panel subscription-details" *ngIf="isUserActivated">
+      <h2>Current Subscription</h2>
+      
+      <div *ngIf="hasActiveSubscription" class="subscription-info">
+        <div class="plan-badge">{{ userSubscription?.planName }}</div>
+        
+        <div class="details-row">
+          <div class="label">Plan:</div>
+          <div class="value">{{ userSubscription?.planName || 'Standard Plan' }}</div>
+        </div>
+        <div class="details-row">
+          <div class="label">Status:</div>
+          <div class="value highlight">{{ userSubscription?.status || 'Active' }}</div>
+        </div>
+        <div class="details-row" *ngIf="userSubscription?.description">
+          <div class="label">Description:</div>
+          <div class="value description">{{ userSubscription?.description }}</div>
+        </div>
+        <div class="details-row">
+          <div class="label">Start Date:</div>
+          <div class="value">{{ formatDate(userSubscription?.startDate) }}</div>
+        </div>
+        <div class="details-row">
+          <div class="label">Next Payment:</div>
+          <div class="value highlight-date">{{ formatDate(userSubscription?.endDate) }}</div>
+        </div>
+        <div class="details-row">
+          <div class="label">Amount:</div>
+          <div class="value highlight">₹{{ getSubscriptionPrice() }}</div>
+        </div>
+        
+        <div class="features-section" *ngIf="userSubscription?.features">
+          <h3>Plan Features</h3>
+          <div class="feature-item" *ngIf="userSubscription?.features?.usageLimit">
+            <span class="feature-name">Usage Limit:</span>
+            <span class="feature-value">{{ userSubscription?.features?.usageLimit }}</span>
+          </div>
+          <div class="feature-item" *ngIf="userSubscription?.features?.apiCalls">
+            <span class="feature-name">API Calls:</span>
+            <span class="feature-value">{{ userSubscription?.features?.apiCalls }}</span>
+          </div>
+          <div class="feature-item" *ngIf="userSubscription?.features?.storage">
+            <span class="feature-name">Storage:</span>
+            <span class="feature-value">{{ userSubscription?.features?.storage }}</span>
+          </div>
+          <div class="feature-item" *ngIf="userSubscription?.features?.supportLevel">
+            <span class="feature-name">Support Level:</span>
+            <span class="feature-value">{{ userSubscription?.features?.supportLevel }}</span>
+          </div>
+        </div>
+        
+        <div class="subscription-actions">
+          <button class="btn-primary" (click)="navigateTo('/plans')">Manage Subscription</button>
+          <button class="btn-secondary" (click)="navigateTo('/invoices')">View Invoices</button>
+        </div>
+      </div>
+
+      <div *ngIf="!hasActiveSubscription" class="no-subscription">
+        <div class="no-subscription-message">
+          <p>You don't have an active subscription</p>
+          <p class="sub-message">Choose a subscription plan to access premium features</p>
+        </div>
+        <button class="btn-primary btn-large" (click)="navigateTo('/plans')">Browse Plans</button>
+      </div>
+    </div>
+    
+    <div class="panel activity-panel" *ngIf="isUserActivated">
+      <h2>Recent Activity</h2>
+      <div class="activity-list" *ngIf="recentActivity && recentActivity.length > 0">
+        <div class="activity-item" *ngFor="let activity of recentActivity">
+          <div class="activity-info">
+            <span class="activity-action">{{ activity.action }}</span>
+            <span class="activity-date">{{ formatDate(activity.date) }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="no-activity" *ngIf="!recentActivity || recentActivity.length === 0">
+        No recent activity to display.
+      </div>
+    </div>
+  </div>
+</div> 

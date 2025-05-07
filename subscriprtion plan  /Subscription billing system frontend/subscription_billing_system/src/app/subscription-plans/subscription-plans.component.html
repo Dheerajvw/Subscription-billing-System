@@ -1,0 +1,82 @@
+<div class="subscription-plans-container">
+  <div class="header">
+    <h1>Subscription Plans</h1>
+    <p>Choose the plan that works best for you</p>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="loading-container">
+    <p>Loading plans...</p>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Success message -->
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <!-- Current subscription -->
+  <div *ngIf="currentSubscription" class="current-plan-info">
+    <h3>Your Current Plan: {{ getCurrentPlanName() }}</h3>
+    <p>Status: {{ currentSubscription.status || 'Active' }}</p>
+    <p>Renewal Date: {{ currentSubscription.renewalDate | date }}</p>
+    <button class="btn-secondary" (click)="navigateTo('/dashboard')">View Details in Dashboard</button>
+  </div>
+
+  <!-- Plans list -->
+  <div class="plans-container" *ngIf="!isLoading && subscriptionPlans.length > 0">
+    <div *ngFor="let plan of subscriptionPlans" 
+         class="plan-card" 
+         [class.selected]="isPlanSelected(plan.id)"
+         [class.current]="currentSubscription?.planId === plan.id">
+      
+      <div class="plan-header">
+        <h3>{{ plan.name }}</h3>
+        <div class="plan-price">₹{{ plan.price.toFixed(2) }}/{{ plan.billingCycle || 'month' }}</div>
+      </div>
+      
+      <div class="plan-description">
+        {{ plan.description }}
+      </div>
+      
+      <div class="plan-features">
+        <ul>
+          <li *ngFor="let feature of plan.features">{{ feature }}</li>
+        </ul>
+      </div>
+      
+      <div class="plan-actions">
+        <button 
+          class="btn-select" 
+          [class.selected]="isPlanSelected(plan.id)" 
+          [disabled]="currentSubscription?.planId === plan.id"
+          (click)="selectPlan(plan.id)">
+          {{ currentSubscription?.planId === plan.id ? 'Current Plan' : 
+             isPlanSelected(plan.id) ? 'Selected' : 'Select' }}
+        </button>
+        
+        <button 
+          *ngIf="isPlanSelected(plan.id) && currentSubscription?.planId !== plan.id" 
+          class="btn-subscribe"
+          [disabled]="isLoading"
+          (click)="subscribeToPlan(plan.id)">
+          {{ isLoading ? 'Processing...' : 'Subscribe Now' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No plans available -->
+  <div *ngIf="!isLoading && subscriptionPlans.length === 0 && !errorMessage" class="no-plans">
+    <p>No subscription plans available at the moment. Please check back later.</p>
+  </div>
+
+  <!-- Back to dashboard button -->
+  <div class="action-buttons">
+    <button class="btn-back" (click)="navigateTo('/dashboard')">Back to Dashboard</button>
+  </div>
+</div> 

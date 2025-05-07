@@ -1,0 +1,689 @@
+/* Main Container */
+.landing-container {
+  font-family: 'Roboto', Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo span {
+  font-size: 24px;
+  font-weight: 700;
+  color: #4a90e2;
+}
+
+.nav-buttons button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-login {
+  background-color: transparent;
+  border: 1px solid #4a90e2;
+  color: #4a90e2;
+}
+
+.btn-signup {
+  background-color: #4a90e2;
+  border: 1px solid #4a90e2;
+  color: white;
+}
+
+.btn-login:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+.btn-signup:hover {
+  background-color: #3a80d2;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #4a90e2 0%, #5f30e2 100%);
+  color: white;
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.hero .subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cta-buttons button {
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #4dbd74;
+  border: none;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #ffa500;
+  border: none;
+  color: white;
+}
+
+.btn-tertiary {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-tertiary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Features Section */
+.features {
+  padding: 80px 20px;
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+.features h2 {
+  margin-bottom: 50px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.feature-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+
+.feature-card h3 {
+  color: #4a90e2;
+  margin-bottom: 15px;
+}
+
+/* Plans Section */
+.plans {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: #f9fbfd;
+}
+
+.plans h2 {
+  margin-bottom: 15px;
+  font-size: 2.2rem;
+  color: #333;
+  font-weight: 700;
+}
+
+.section-subtitle {
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 50px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #4a90e2;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container {
+  background-color: #fff4f4;
+  border-left: 4px solid #ff6b6b;
+  padding: 20px;
+  margin: 30px auto;
+  max-width: 500px;
+  text-align: left;
+  border-radius: 4px;
+}
+
+.btn-retry {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.btn-retry:hover {
+  background-color: #e55a5a;
+}
+
+.plan-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.plan-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 280px;
+  max-width: 350px;
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.plan-card.featured {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(74, 144, 226, 0.2);
+  border: 2px solid #4a90e2;
+}
+
+.ribbon {
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  transform: rotate(45deg);
+  background-color: #4a90e2;
+  color: white;
+  padding: 5px 30px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.plan-header {
+  padding: 30px 30px 20px;
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.plan-card h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.price-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.currency {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #4a90e2;
+  vertical-align: top;
+  margin-right: 2px;
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4a90e2;
+}
+
+.period {
+  font-size: 1rem;
+  color: #888;
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+.plan-description {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 15px;
+}
+
+.plan-features {
+  padding: 20px 30px;
+  flex-grow: 1;
+}
+
+.plan-card ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.plan-card ul li {
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.plan-card ul li::before {
+  content: "✓";
+  color: #4dbd74;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.plan-footer {
+  padding: 20px 30px 30px;
+  background-color: #fafafa;
+  border-top: 1px solid #f0f0f0;
+}
+
+.btn-plan {
+  display: inline-block;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 12px 0;
+  width: 100%;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-plan:hover {
+  background-color: #3a80d2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+}
+
+.view-all-plans {
+  margin-top: 50px;
+}
+
+.btn-view-all {
+  display: inline-block;
+  background-color: transparent;
+  color: #4a90e2;
+  border: 2px solid #4a90e2;
+  padding: 12px 30px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-view-all:hover {
+  background-color: #4a90e2;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Testimonials Section */
+.testimonials {
+  padding: 80px 20px;
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+.testimonials h2 {
+  margin-bottom: 50px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.testimonial-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonial-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.testimonial-card .quote {
+  font-style: italic;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.testimonial-card .author {
+  font-weight: 700;
+  color: #4a90e2;
+}
+
+/* Get Started Section */
+.get-started {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.get-started h2 {
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.get-started-card {
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 8px;
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.get-started-card p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.get-started-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Footer */
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Discount Banner Section */
+.discount-banner {
+  background: linear-gradient(135deg, #f0f4ff 0%, #e6edff 100%);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.discount-banner h2 {
+  font-size: 2rem;
+  color: #3a36db;
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+}
+
+.discount-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.discount-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  width: 280px;
+  border: 2px dashed #3a36db;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.discount-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(58, 54, 219, 0.2);
+}
+
+.discount-code {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #3a36db;
+  margin-bottom: 0.8rem;
+  letter-spacing: 1px;
+  background: #f0f4ff;
+  padding: 0.4rem 1rem;
+  border-radius: 5px;
+}
+
+.discount-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #e53935;
+  margin-bottom: 0.8rem;
+}
+
+.discount-description {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #555;
+  min-height: 3rem;
+  line-height: 1.5;
+}
+
+.btn-apply-discount {
+  background-color: #3a36db;
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.btn-apply-discount:hover {
+  background-color: #2d2aa9;
+  transform: scale(1.05);
+}
+
+/* Discount Callout in Plans Section */
+.discount-callout {
+  background-color: #fff8e1;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  max-width: 600px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #ffc107;
+}
+
+.discount-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.discount-text {
+  flex: 1;
+}
+
+.discount-text p {
+  margin: 0;
+  color: #5f4b00;
+}
+
+.discount-text a {
+  color: #3a36db;
+  text-decoration: underline;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.discount-text a:hover {
+  color: #2d2aa9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero .subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .feature-card, .plan-card, .testimonial-card {
+    min-width: 100%;
+  }
+  
+  .plan-card.featured {
+    transform: none;
+  }
+  
+  .discount-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .discount-card {
+    width: 90%;
+    max-width: 320px;
+  }
+  
+  .discount-callout {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .discount-icon {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+} 

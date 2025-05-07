@@ -1,0 +1,70 @@
+<div class="invoice-container">
+  <div class="invoice-header">
+    <h1>My Invoices</h1>
+    <div class="nav-buttons">
+      <button class="btn-back" routerLink="/dashboard">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading invoices...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="!loading && !error" class="invoice-content">
+    <div *ngIf="invoices.length === 0" class="no-invoices">
+      You don't have any invoices yet.
+    </div>
+
+    <div *ngIf="invoices.length > 0" class="invoice-list">
+      <div class="invoice-list-header">
+        <div class="invoice-id">Invoice #</div>
+        <div class="invoice-date">Date</div>
+        <div class="invoice-due">Due Date</div>
+        <div class="invoice-amount">Amount</div>
+        <div class="invoice-discount">Discount</div>
+        <div class="invoice-status">Status</div>
+        <div class="invoice-actions">Actions</div>
+      </div>
+
+      <div *ngFor="let invoice of invoices" class="invoice-item" [ngClass]="{'paid': invoice.invoiceStatus === 'PAID', 'pending': invoice.invoiceStatus === 'PENDING', 'overdue': invoice.invoiceStatus === 'OVERDUE'}">
+        <div class="invoice-id">{{ invoice.invoiceId }}</div>
+        <div class="invoice-date">{{ formatDate(invoice.invoiceDate) }}</div>
+        <div class="invoice-due">{{ formatDate(invoice.invoiceDueDate) }}</div>
+        <div class="invoice-amount">
+          <span *ngIf="!invoice.discountApplied">{{ invoice.invoiceAmount | currency:'INR':'symbol':'1.0-2' }}</span>
+          <!-- Show both original and discounted price when discount is applied -->
+          <span *ngIf="invoice.discountApplied" class="discounted-price">
+            <span class="original-price" *ngIf="invoice.originalAmount">{{ invoice.originalAmount | currency:'INR':'symbol':'1.0-2' }}</span>
+            <span class="discount-arrow" *ngIf="invoice.originalAmount">→</span>
+            <span class="final-price">{{ invoice.invoiceAmount | currency:'INR':'symbol':'1.0-2' }}</span>
+          </span>
+        </div>
+        <div class="invoice-discount">
+          <span *ngIf="invoice.discountApplied" class="discount-badge">
+            {{ invoice.discountName }} <span *ngIf="invoice.discountAmount">({{ invoice.discountAmount }})</span>
+          </span>
+          <span *ngIf="!invoice.discountApplied">None</span>
+        </div>
+        <div class="invoice-status">
+          <span class="status-badge" [ngClass]="invoice.invoiceStatus.toLowerCase()">
+            {{ invoice.invoiceStatus }}
+          </span>
+          <span *ngIf="processingPayment && currentPaymentId === invoice.invoiceId.toString()" class="processing-badge">
+            Processing<span *ngIf="paymentRetryCount > 0"> (Retry {{paymentRetryCount}}/{{maxRetries}})</span>...
+          </span>
+          <span *ngIf="paymentSuccess && currentPaymentId === invoice.invoiceId.toString()" class="success-badge">
+            Payment successful!
+          </span>
+        </div>
+        <div class="invoice-actions">
+          <button class="btn-view" (click)="viewInvoice(invoice)">View</button>
+          <button *ngIf="invoice.invoiceStatus === 'PENDING'" 
+                  class="btn-pay" 
+                  [disabled]="processingPayment"
+                  (click)="payInvoice(invoice)">
+            {{ processingPayment && currentPaymentId === invoice.invoiceId.toString() ? 'Processing...' : 'Pay Now' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

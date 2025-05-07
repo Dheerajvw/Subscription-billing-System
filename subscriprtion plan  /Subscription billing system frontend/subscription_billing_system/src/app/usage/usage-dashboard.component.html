@@ -1,0 +1,161 @@
+<div class="usage-dashboard-container">
+  <!-- Loading and error states -->
+  <div *ngIf="loading" class="loading-message">
+    <span class="spinner"></span>
+    <p>Loading your usage data...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ errorMessage }}</p>
+    <button (click)="retry()">Try Again</button>
+  </div>
+
+  <!-- Dashboard content -->
+  <div *ngIf="!loading && !error" class="usage-content">
+    <!-- Header section -->
+    <div class="usage-header">
+      <div>
+        <h1>Usage Dashboard</h1>
+        <p class="subheading">Monitor your subscription usage</p>
+      </div>
+      <div class="period-selector">
+        <span>{{ currentPeriod }}</span>
+        <button class="refresh-btn" (click)="refresh()" aria-label="Refresh data">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Subscription info panel -->
+    <div class="panel subscription-info">
+      <h2>Active Subscription</h2>
+      <div class="info-row">
+        <span class="label">Plan:</span>
+        <span class="value">{{ subscriptionDetails?.name }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Status:</span>
+        <span class="value status-badge">Active</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Price:</span>
+        <span class="value">${{ subscriptionDetails?.price }}/month</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Features:</span>
+        <span class="value">{{ subscriptionDetails?.storageLimit }} Storage, {{ subscriptionDetails?.userLimit }}</span>
+      </div>
+    </div>
+
+    <!-- Usage meters panel -->
+    <div class="panel usage-meters">
+      <h2>Current Usage</h2>
+      
+      <!-- Storage usage -->
+      <div class="meter-container" *ngIf="usageData">
+        <div class="meter-header">
+          <span class="meter-label">Storage</span>
+          <span class="meter-value">
+            {{ usageData.storage.used }} GB / {{ usageData.storage.total }} GB
+          </span>
+        </div>
+        <div class="meter">
+          <div class="meter-fill" 
+               [style.width.%]="usageData.storage.percentage" 
+               [ngClass]="getMeterClass(usageData.storage.percentage)">
+          </div>
+        </div>
+      </div>
+
+      <!-- User accounts usage -->
+      <div class="meter-container" *ngIf="usageData">
+        <div class="meter-header">
+          <span class="meter-label">User Accounts</span>
+          <span class="meter-value">
+            {{ usageData.userAccounts.used }} / {{ usageData.userAccounts.total }}
+          </span>
+        </div>
+        <div class="meter">
+          <div class="meter-fill" 
+               [style.width.%]="usageData.userAccounts.percentage" 
+               [ngClass]="getMeterClass(usageData.userAccounts.percentage)">
+          </div>
+        </div>
+      </div>
+
+      <!-- API calls usage -->
+      <div class="meter-container" *ngIf="usageData">
+        <div class="meter-header">
+          <span class="meter-label">API Calls</span>
+          <span class="meter-value">
+            {{ usageData.apiCalls.used | number }} / {{ usageData.apiCalls.total | number }}
+          </span>
+        </div>
+        <div class="meter">
+          <div class="meter-fill" 
+               [style.width.%]="usageData.apiCalls.percentage" 
+               [ngClass]="getMeterClass(usageData.apiCalls.percentage)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Usage history panel -->
+    <div class="panel usage-history">
+      <h2>Usage History</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Storage (GB)</th>
+              <th>Users</th>
+              <th>API Calls</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of usageHistory">
+              <td>{{ entry.period }}</td>
+              <td>{{ entry.storage }}</td>
+              <td>{{ entry.userAccounts }}</td>
+              <td>{{ entry.apiCalls | number }}</td>
+            </tr>
+            <tr *ngIf="usageHistory.length === 0">
+              <td colspan="4" class="no-data">No history data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Usage tips panel -->
+    <div class="panel usage-tips" *ngIf="usageData">
+      <h2>Usage Tips</h2>
+      <ul class="tips-list">
+        <li>
+          <strong>Storage:</strong> 
+          <span [ngClass]="{'high-usage-tip': usageData.storage.percentage > 80}">
+            {{ getUsageTip('storage') }}
+          </span>
+        </li>
+        <li>
+          <strong>User Accounts:</strong>
+          <span [ngClass]="{'high-usage-tip': usageData.userAccounts.percentage > 80}">
+            {{ getUsageTip('userAccounts') }}
+          </span>
+        </li>
+        <li>
+          <strong>API Calls:</strong>
+          <span [ngClass]="{'high-usage-tip': usageData.apiCalls.percentage > 80}">
+            {{ getUsageTip('apiCalls') }}
+          </span>
+        </li>
+      </ul>
+      
+      <div *ngIf="needsUpgrade()" class="upgrade-message">
+        <p>You're approaching or exceeding your plan limits. Consider upgrading your subscription.</p>
+        <button class="upgrade-btn" (click)="router.navigate(['/dashboard'])">View Upgrade Options</button>
+      </div>
+    </div>
+  </div>
+</div> 

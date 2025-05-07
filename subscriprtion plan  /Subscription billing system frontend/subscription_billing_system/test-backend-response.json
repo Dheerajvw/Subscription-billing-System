@@ -1,0 +1,18 @@
+[
+  {
+    "subscription_plan_id": 1,
+    "subscription_plan_name": "Premium Plan",
+    "subscription_plan_price": 99.99,
+    "subscription_plan_description": "Premium subscription with all features",
+    "subscription_plan_duration": 30,
+    "usage_limit": 1000
+  },
+  {
+    "subscription_plan_id": 2,
+    "subscription_plan_name": "Basics plan",
+    "subscription_plan_price": 99.99,
+    "subscription_plan_description": "Premium subscription with all features",
+    "subscription_plan_duration": 30,
+    "usage_limit": 1
+  }
+] 

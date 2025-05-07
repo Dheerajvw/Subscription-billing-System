@@ -1,0 +1,216 @@
+.invoice-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.invoice-header h1 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+.nav-buttons button {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #333;
+  font-weight: 500;
+}
+
+.nav-buttons button:hover {
+  background-color: #e0e0e0;
+}
+
+.loading, .error-message, .no-invoices {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.error-message {
+  color: #e53e3e;
+}
+
+.invoice-list {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.invoice-list-header {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 1fr 0.8fr 0.8fr 1fr;
+  padding: 15px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  color: #333;
+}
+
+.invoice-item {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 1fr 0.8fr 0.8fr 1fr;
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s;
+}
+
+.invoice-item:last-child {
+  border-bottom: none;
+}
+
+.invoice-item:hover {
+  background-color: #f9f9f9;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.status-badge.paid {
+  background-color: #c6f6d5;
+  color: #2f855a;
+}
+
+.status-badge.pending {
+  background-color: #bee3f8;
+  color: #2c5282;
+}
+
+.status-badge.overdue {
+  background-color: #fed7d7;
+  color: #c53030;
+}
+
+.processing-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: #fefcbf;
+  color: #744210;
+  animation: pulse 1.5s infinite;
+}
+
+.success-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: #c6f6d5;
+  color: #2f855a;
+  font-weight: 500;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+.invoice-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-view, .btn-pay {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn-view {
+  background-color: #e2e8f0;
+  color: #2d3748;
+}
+
+.btn-pay {
+  background-color: #4299e1;
+  color: white;
+}
+
+.btn-view:hover {
+  background-color: #cbd5e0;
+}
+
+.btn-pay:hover {
+  background-color: #3182ce;
+}
+
+.btn-pay:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.discount-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.invoice-discount {
+  flex: 1;
+  text-align: center;
+}
+
+.discounted-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 0.9em;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #999;
+  margin-bottom: 2px;
+  font-size: 0.85em;
+}
+
+.final-price {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.discount-arrow {
+  color: #666;
+  margin: 0 4px;
+  font-size: 0.8em;
+}
+
+.discount-badge {
+  background-color: #ffc107;
+  color: #212529;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 500;
+  white-space: nowrap;
+} 

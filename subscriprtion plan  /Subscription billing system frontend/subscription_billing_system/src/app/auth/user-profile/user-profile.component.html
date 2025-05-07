@@ -1,0 +1,80 @@
+<div class="user-profile-container">
+  <!-- Loading indicator -->
+  <div *ngIf="loading" class="loading-indicator">
+    <div class="spinner"></div>
+    <p>Loading profile information...</p>
+  </div>
+
+  <!-- Profile content -->
+  <div *ngIf="!loading" class="profile-content">
+    <div class="profile-header">
+      <h1>User Profile</h1>
+      <button *ngIf="!editMode" class="edit-btn" (click)="toggleEditMode()">Edit Profile</button>
+      <div *ngIf="editMode" class="edit-actions">
+        <button class="save-btn" (click)="saveProfile()">Save Changes</button>
+        <button class="cancel-btn" (click)="toggleEditMode()">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Profile info display/edit mode -->
+    <div class="profile-info-container">
+      <!-- Read-only mode -->
+      <div *ngIf="!editMode" class="profile-info">
+        <div class="profile-section">
+          <h2>Personal Information</h2>
+          <div class="info-row">
+            <span class="label">Name:</span>
+            <span class="value">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Email:</span>
+            <span class="value">{{ currentUser.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Phone:</span>
+            <span class="value">{{ currentUser.phone || 'Not provided' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Company:</span>
+            <span class="value">{{ currentUser.company || 'Not provided' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit mode -->
+      <div *ngIf="editMode" class="profile-form">
+        <div class="profile-section">
+          <h2>Personal Information</h2>
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" [(ngModel)]="userForm.firstName" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" [(ngModel)]="userForm.lastName" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" [(ngModel)]="userForm.email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" [(ngModel)]="userForm.phone">
+          </div>
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" [(ngModel)]="userForm.company">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success/Error messages -->
+    <div *ngIf="updateSuccess" class="success-message">
+      Your profile has been updated successfully.
+    </div>
+    <div *ngIf="updateError" class="error-message">
+      {{ updateError }}
+    </div>
+  </div>
+</div> 

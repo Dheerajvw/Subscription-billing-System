@@ -1,0 +1,278 @@
+.usage-dashboard-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif);
+}
+
+/* Loading and error states */
+.loading-message, .error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #f9f9fa;
+  padding: 24px;
+  margin: 20px 0;
+}
+
+.loading-message {
+  color: #6b7280;
+}
+
+.error-message {
+  color: #ef4444;
+}
+
+.error-message button {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3b82f6;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Header section */
+.usage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.usage-header h1 {
+  margin: 0 0 4px 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.subheading {
+  margin: 0;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.period-selector {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.refresh-btn {
+  margin-left: 12px;
+  background: none;
+  border: none;
+  color: #3b82f6;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.refresh-btn:hover {
+  background-color: #ebf5ff;
+}
+
+/* Panel styles */
+.panel {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.panel h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #111827;
+}
+
+/* Subscription info section */
+.subscription-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 16px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  background-color: #dcfce7;
+  color: #15803d;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Usage meters */
+.meter-container {
+  margin-bottom: 24px;
+}
+
+.meter-container:last-child {
+  margin-bottom: 0;
+}
+
+.meter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.meter-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.meter-value {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.meter {
+  height: 12px;
+  background-color: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.low {
+  background-color: #10b981;
+}
+
+.medium {
+  background-color: #f59e0b;
+}
+
+.high {
+  background-color: #ef4444;
+}
+
+/* Usage history table */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  font-weight: 500;
+  color: #4b5563;
+  background-color: #f9fafb;
+}
+
+td {
+  color: #1f2937;
+}
+
+.no-data {
+  text-align: center;
+  padding: 32px;
+  color: #6b7280;
+}
+
+/* Usage tips */
+.tips-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tips-list li {
+  margin-bottom: 16px;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.tips-list li:last-child {
+  margin-bottom: 0;
+}
+
+.high-usage-tip {
+  color: #b91c1c;
+  font-weight: 400;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .usage-dashboard-container {
+    padding: 16px;
+  }
+  
+  .subscription-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .usage-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .period-selector {
+    margin-top: 16px;
+  }
+  
+  th, td {
+    padding: 10px 12px;
+  }
+} 

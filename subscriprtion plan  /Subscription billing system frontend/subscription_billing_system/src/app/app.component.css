@@ -1,0 +1,53 @@
+.content-container {
+  padding-top: 20px;
+  min-height: calc(100vh - 70px);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Global styles that will be applied to the entire app */
+body {
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333333;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Global button styles */
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Some utility classes that can be used across the app */
+.text-center {
+  text-align: center;
+}
+
+.mt-2 {
+  margin-top: 1rem;
+}
+
+.mb-2 {
+  margin-bottom: 1rem;
+}
+
+.p-2 {
+  padding: 1rem;
+}
+
+/* For responsive layouts */
+@media (max-width: 768px) {
+  .content-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

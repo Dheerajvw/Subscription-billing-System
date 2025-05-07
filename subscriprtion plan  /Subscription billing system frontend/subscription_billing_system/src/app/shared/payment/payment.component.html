@@ -1,0 +1,166 @@
+<div class="payment-container">
+  <div class="card">
+    <div class="card-header">
+      <h2>Complete Your Payment</h2>
+      <div class="invoice-info">
+        <span>Invoice #{{invoiceId}}</span>
+        <span class="amount">{{invoiceAmount | currency:'INR':'symbol':'1.0-2'}}</span>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div *ngIf="success" class="alert alert-success">
+        {{ success }}
+        <div class="mt-2">
+          <button class="btn btn-outline-success me-2" (click)="goToHome()">Go to Home</button>
+          <button class="btn btn-outline-secondary" (click)="cancelRedirect()">Stay on This Page</button>
+        </div>
+      </div>
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+        <div class="mt-2" *ngIf="shouldShowRetryButton()">
+          <button class="btn btn-outline-danger" (click)="retryPayment()">Retry Payment</button>
+        </div>
+        <div class="mt-2" *ngIf="error.includes('session has expired') || error.includes('Redirecting to login')">
+          <button class="btn btn-outline-primary" (click)="goToLogin()">Login Now</button>
+        </div>
+      </div>
+
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <!-- Payment Method Selection -->
+        <div class="form-group">
+          <label for="paymentMethod">Payment Method</label>
+          <select 
+            id="paymentMethod" 
+            formControlName="paymentMethod"
+            class="form-control"
+            (change)="onPaymentMethodChange()">
+            <option *ngFor="let method of paymentMethods" [value]="method">
+              {{ method | titlecase | replace:'_':' ' }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Credit Card Fields - show only when CREDIT_CARD is selected -->
+        <div *ngIf="paymentForm.get('paymentMethod')?.value === 'CREDIT_CARD'" class="payment-method-fields">
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input 
+              type="text" 
+              id="cardNumber" 
+              formControlName="cardNumber" 
+              class="form-control"
+              placeholder="1234 5678 9012 3456"
+              maxlength="16">
+            <div *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched" class="error-message">
+              Please enter a valid 16-digit card number
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="cardExpiry">Expiry Date</label>
+                <input 
+                  type="text" 
+                  id="cardExpiry" 
+                  formControlName="cardExpiry" 
+                  class="form-control"
+                  placeholder="MM/YY"
+                  maxlength="5">
+                <div *ngIf="paymentForm.get('cardExpiry')?.invalid && paymentForm.get('cardExpiry')?.touched" class="error-message">
+                  Please enter a valid expiry date (MM/YY)
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="cardCvv">CVV</label>
+                <input 
+                  type="text" 
+                  id="cardCvv" 
+                  formControlName="cardCvv" 
+                  class="form-control"
+                  placeholder="123"
+                  maxlength="4">
+                <div *ngIf="paymentForm.get('cardCvv')?.invalid && paymentForm.get('cardCvv')?.touched" class="error-message">
+                  Please enter a valid CVV code
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank Transfer Fields - show only when BANK_TRANSFER is selected -->
+        <div *ngIf="paymentForm.get('paymentMethod')?.value === 'BANK_TRANSFER'" class="payment-method-fields">
+          <div class="form-group">
+            <label for="accountNumber">Account Number</label>
+            <input 
+              type="text" 
+              id="accountNumber" 
+              formControlName="accountNumber" 
+              class="form-control"
+              placeholder="Your bank account number">
+            <div *ngIf="paymentForm.get('accountNumber')?.invalid && paymentForm.get('accountNumber')?.touched" class="error-message">
+              Please enter a valid account number
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="routingNumber">Routing Number</label>
+            <input 
+              type="text" 
+              id="routingNumber" 
+              formControlName="routingNumber" 
+              class="form-control"
+              placeholder="9-digit routing number">
+            <div *ngIf="paymentForm.get('routingNumber')?.invalid && paymentForm.get('routingNumber')?.touched" class="error-message">
+              Please enter a valid 9-digit routing number
+            </div>
+          </div>
+        </div>
+
+        <!-- PayPal Fields - show only when PAYPAL is selected -->
+        <div *ngIf="paymentForm.get('paymentMethod')?.value === 'PAYPAL'" class="payment-method-fields">
+          <div class="form-group">
+            <label for="paypalEmail">PayPal Email</label>
+            <input 
+              type="email" 
+              id="paypalEmail" 
+              formControlName="paypalEmail" 
+              class="form-control"
+              placeholder="your-email@example.com">
+            <div *ngIf="paymentForm.get('paypalEmail')?.invalid && paymentForm.get('paypalEmail')?.touched" class="error-message">
+              Please enter a valid email address
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <div class="payment-summary">
+            <div *ngIf="originalAmount && originalAmount > invoiceAmount" class="payment-original-amount">
+              <span>Original Price:</span>
+              <span class="amount crossed-out">{{originalAmount | currency:'INR':'symbol':'1.0-2'}}</span>
+            </div>
+            <div *ngIf="discountInfo" class="payment-discount">
+              <span>Discount ({{discountInfo}}):</span>
+              <span class="amount discount">-{{(originalAmount || 0) - (invoiceAmount || 0) | currency:'INR':'symbol':'1.0-2'}}</span>
+            </div>
+            <div class="payment-amount">
+              <span>Total:</span>
+              <span class="amount">{{invoiceAmount | currency:'INR':'symbol':'1.0-2'}}</span>
+            </div>
+          </div>
+          
+          <button 
+            type="submit" 
+            class="btn btn-primary" 
+            [disabled]="paymentForm.invalid || loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Pay Now
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

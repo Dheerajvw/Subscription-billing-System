@@ -1,0 +1,83 @@
+<div class="container">
+  <div *ngIf="!showPaymentComponent">
+    <h1>Choose Your Subscription Plan</h1>
+    
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+    
+    <div *ngIf="success" class="alert alert-success">
+      {{ success }}
+    </div>
+    
+    <div class="subscription-plans">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let plan of subscriptionPlans">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h2>{{ plan.name }}</h2>
+              <div class="price">
+                ₹{{ plan.price }} / {{ plan.duration | lowercase }}
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="description">{{ plan.description }}</p>
+              <ul class="features">
+                <li *ngFor="let feature of plan.features">{{ feature }}</li>
+              </ul>
+              <div class="text-center mt-4">
+                <button 
+                  type="button" 
+                  class="btn btn-primary" 
+                  (click)="subscriptionForm.get('selectedPlanId')?.setValue(plan.id)">
+                  Choose Plan
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="selected-plan-form">
+      <form [formGroup]="subscriptionForm" (ngSubmit)="onSubscribe()">
+        <div class="form-group">
+          <label for="selectedPlanId">Selected Plan</label>
+          <select id="selectedPlanId" formControlName="selectedPlanId" class="form-control">
+            <option *ngFor="let plan of subscriptionPlans" [value]="plan.id">
+              {{ plan.name }} - ₹{{ plan.price }} / {{ plan.duration | lowercase }}
+            </option>
+          </select>
+        </div>
+        
+        <div class="form-group" *ngIf="discountsLoaded">
+          <label for="discountCode">Discount Code (Optional)</label>
+          <select id="discountCode" formControlName="discountCode" class="form-control">
+            <option value="">No Discount</option>
+            <option *ngFor="let discount of discounts" [value]="discount.code">
+              {{ discount.name }} ({{ discount.discountPercentage }}% off)
+            </option>
+          </select>
+        </div>
+        
+        <div class="form-actions text-center">
+          <button type="submit" class="btn btn-primary btn-lg" [disabled]="loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Subscribe
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Payment Component -->
+  <div *ngIf="showPaymentComponent && generatedInvoice">
+    <app-payment 
+      [invoiceId]="generatedInvoice.invoiceId" 
+      [invoiceAmount]="generatedInvoice.amount || 0"
+      [invoiceCurrency]="generatedInvoice.currency || 'INR'"
+      [originalAmount]="generatedInvoice.originalAmount || 0"
+      [discountInfo]="generatedInvoice.discountApplied ? generatedInvoice.discountName + ' ' + generatedInvoice.discountAmount : ''">
+    </app-payment>
+  </div>
+</div> 
